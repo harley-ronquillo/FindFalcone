@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Falcone</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="main.js" defer type="module"></script>
+    <script src="availability.js" defer type="module"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Falcone</h1>
+        <div class="dropdowns">
+            <!-- Planet 1 -->
+            <div class="dropdown">
+                <label for="planet1">Planet 1:</label>
+                <select id="planet1" class="planet-dropdown">
+                    <option value="">Select a planet</option>
+                </select>
+                <div class="vehicles" id="vehicle1"></div>
+            </div>
+
+            <!-- Planet 2 -->
+            <div class="dropdown">
+                <label for="planet2">Planet 2:</label>
+                <select id="planet2" class="planet-dropdown">
+                    <option value="">Select a planet</option>
+                </select>
+                <div class="vehicles" id="vehicle2"></div>
+            </div>
+
+            <!-- Planet 3 -->
+            <div class="dropdown">
+                <label for="planet3">Planet 3:</label>
+                <select id="planet3" class="planet-dropdown">
+                    <option value="">Select a planet</option>
+                </select>
+                <div class="vehicles" id="vehicle3"></div>
+            </div>
+
+            <!-- Planet 4 -->
+            <div class="dropdown">
+                <label for="planet4">Planet 4:</label>
+                <select id="planet4" class="planet-dropdown">
+                    <option value="">Select a planet</option>
+                </select>
+                <div class="vehicles" id="vehicle4"></div>
+            </div>
+        </div>
+        <button id="findFalcone">Find Falcone</button>
+        <p id="timeTaken">Time Taken: <span id="time">0</span></p>
+        <p id="result"></p> <!-- To display the result -->
+    </div>
+</body>
+</html>
