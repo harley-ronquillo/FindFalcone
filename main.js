@@ -72,18 +72,40 @@ export async function showVehicles(planetName, vehicleContainerId) {
     });
 }
 
-
-// Add event listeners to planet dropdowns
 export async function addPlanetEventListeners() {
     const planetDropdowns = document.querySelectorAll(".planet-dropdown");
 
     planetDropdowns.forEach(dropdown => {
         dropdown.addEventListener("change", (event) => {
-            const selectedPlanet = event.target.value; // Get the selected planet
-            const vehicleContainerId = `vehicle${dropdown.id.replace("planet", "")}`; // Get the corresponding vehicle container ID
-            showVehicles(selectedPlanet, vehicleContainerId); // Show vehicles for the selected planet
+            updatePlanetDropdowns(); // Ensure selected planets are disabled in other dropdowns
+            const selectedPlanet = event.target.value;
+            const vehicleContainerId = `vehicle${dropdown.id.replace("planet", "")}`;
+            showVehicles(selectedPlanet, vehicleContainerId);
         });
     });
 }
+
+// Function to update dropdowns and disable already selected planets
+function updatePlanetDropdowns() {
+    const selectedPlanets = new Set(); // Store selected planets
+
+    // Get selected planets
+    document.querySelectorAll(".planet-dropdown").forEach(dropdown => {
+        if (dropdown.value) {
+            selectedPlanets.add(dropdown.value);
+        }
+    });
+
+    // Disable selected planets in other dropdowns
+    document.querySelectorAll(".planet-dropdown").forEach(dropdown => {
+        const currentSelection = dropdown.value;
+        dropdown.querySelectorAll("option").forEach(option => {
+            if (option.value && option.value !== currentSelection) {
+                option.disabled = selectedPlanets.has(option.value);
+            }
+        });
+    });
+}
+
 
 
