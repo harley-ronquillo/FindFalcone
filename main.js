@@ -1,5 +1,5 @@
-import { handleVehicleSelection } from "./process.js";
-import { PLANETS_API_URL, VEHICLES_API_URL } from "./url.js";
+import { selectedVehicles } from "./process.js";
+import { VEHICLES_API_URL, PLANETS_API_URL } from "./url.js";
 
 export let planetsData = []; // To store planets data
 export let vehiclesData = []; // To store vehicles data
@@ -23,6 +23,41 @@ export async function getVehicles() {
             vehiclesData = vehicles; // Store vehicles data
         })
         .catch(error => console.error("Error fetching vehicles:", error));
+}
+
+async function handleVehicleSelection(event, planetName) {
+    const selectedVehicleName = event.target.value;
+    const previousVehicle = selectedVehicles[planetName];
+
+    // Restore the previous vehicle's count if it was previously selected
+    if (previousVehicle) {
+        const prevVehicleObj = vehiclesData.find(v => v.name === previousVehicle);
+        if (prevVehicleObj) prevVehicleObj.total_no++;
+    }
+
+    // Update the selected vehicle and decrement count
+    selectedVehicles[planetName] = selectedVehicleName;
+    const newVehicleObj = vehiclesData.find(v => v.name === selectedVehicleName);
+    if (newVehicleObj) newVehicleObj.total_no--;
+
+    // Refresh the UI to reflect changes
+    updateVehicleUI();
+}
+
+function updateVehicleUI() {
+    document.querySelectorAll(".vehicles").forEach(vehicleContainer => {
+        const vehicleInputs = vehicleContainer.querySelectorAll("input[type='radio']");
+        
+        vehicleInputs.forEach(input => {
+            const vehicleObj = vehiclesData.find(v => v.name === input.value);
+            const label = vehicleContainer.querySelector(`label[for="${input.id}"]`);
+
+            if (vehicleObj) {
+                label.textContent = `${vehicleObj.name} (${vehicleObj.total_no} available)`;
+                input.disabled = vehicleObj.total_no === 0; // Disable if no vehicles left
+            }
+        });
+    });
 }
 
 // Populate the planet dropdowns with options
